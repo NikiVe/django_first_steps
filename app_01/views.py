@@ -1,6 +1,10 @@
 from django.shortcuts import render
 
+from app_01.models import Todo
+
 
 def index(request):
-    my_dict = {"insert_me": "I am from views.py"}
-    return render(request,'index.html',context=my_dict)
+    context = {
+        'todos': Todo.objects.all(),
+    }
+    return render(request, 'index.html', context)

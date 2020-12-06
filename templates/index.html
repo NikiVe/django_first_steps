@@ -1,10 +1,20 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My Awesome Site</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
 </head>
 <body>
-    <h1> Hello, This is from Index.html</h1>
-    <h3>{{ insert_me }}</h3>
+<h1>Todos App</h1>
+<ul class="todo-list">
+    {% for todo in todos %}
+        <li class="todo-list-item">
+            {{ todo.title }}
+        </li>
+    {% endfor %}
+</ul>
 </body>
 </html>
