@@ -5,16 +5,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'main.css' %}">
 </head>
 <body>
-<h1>Todos App</h1>
-<ul class="todo-list">
-    {% for todo in todos %}
-        <li class="todo-list-item">
-            {{ todo.title }}
+<div class="root">
+    <h1>Todos App</h1>
+    <form method="post" action="{% url 'create todo' %}">
+        {% csrf_token %}
+        {{ todo_form }}
+        <button>Create</button>
+    </form>
+    <ul class="todo-list">
+        {% for todo in todos %}
+        <li class="todo-list-item collapse-container">
+            <h2 class="todo-title collapse-toggle">
+                {{ todo.title }}
+            </h2>
+            <p class="todo-description collapsable">
+                {{ todo.description }}
+            </p>
+            {% if todo.is_done %}
+            <p class="green-text">Done</p>
+            {% else %}
+            <p class="red-text">Not done</p>
+            {% endif %}
         </li>
-    {% endfor %}
-</ul>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="collapse-container">
+    <p class="collapse-toggle">Toggle </p>
+    <p class="collapsable">I collapse</p>
+</div>
+
+<script src="{% static 'main.js' %}">
+</script>
 </body>
 </html>
