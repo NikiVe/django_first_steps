@@ -1,5 +1,5 @@
 from django.contrib import admin
-from pets.models import Pet, Like
+from pets.models import Pet, Like, Comment
 
 
 class LikeInLine(admin. TabularInline):
@@ -13,3 +13,4 @@ class PetAdmin(admin.ModelAdmin):
 
 admin.site.register(Pet, PetAdmin)
 admin.site.register(Like)
+admin.site.register(Comment)

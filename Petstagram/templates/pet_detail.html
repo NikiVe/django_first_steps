@@ -47,7 +47,7 @@
         {% endif %}
         {% if can_comment %}
             <div class="box">
-                <form method="post" action="% url 'pet details or comment' pet.pk %}">
+                <form method="post" action="{% url 'pet details or comment' pet.pk %}">
                     {{ form }}
                     {% csrf_token %}
                     <button class="btn btn-primary mt-2" type="submit">Add comment</button>
