@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 
+from core.clean_up import clean_up_files
 from pets.forms.comment_form import CommentForm
 from pets.forms.pet_form import PetForm
 from pets.models import Pet, Like, Comment
@@ -37,22 +38,29 @@ def details_or_comment_pet(request, pk):
         return render(request, 'pet_detail.html', context)
 
 
-def persist_pet(request, pet, template_name ):
+def persist_pet(request, pet, template_name):
     if request.method == 'GET':
         form = PetForm(instance=pet)
         context = {
             'form': form,
             'pet': pet,
         }
+
         return render(request, f'{template_name}.html', context)
     else:
+        old_image = pet.image
         form = PetForm(
             request.POST,
+            request.FILES,
             instance=pet
         )
         if form.is_valid():
+            if old_image:
+                clean_up_files(old_image.path)
             form.save()
-            return redirect('pet details or comment', pet.p)
+            Like.objects.ilter(pet_id=pet.id) \
+                .delete()
+            return redirect('pet details or comment', pet.pk)
 
         context = {
             'form': form,
@@ -70,6 +78,7 @@ def edit_pet(request, pk):
 def create_pet(request):
     pet = Pet()
     return persist_pet(request, pet, 'pet_create')
+
 
 def delete_pet(request, pk):
     pet = Pet.objects.get(pk=pk)
