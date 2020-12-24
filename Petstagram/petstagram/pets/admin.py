@@ -11,6 +11,10 @@ class PetAdmin(admin.ModelAdmin):
     list_filter = ('type', 'age')
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'text', 'pet_id')
+
+
 admin.site.register(Pet, PetAdmin)
 admin.site.register(Like)
-admin.site.register(Comment)
+admin.site.register(Comment, CommentAdmin)
