@@ -8,3 +8,5 @@ for index in range(0, len(data), 2):
     products[key] = value
 
 print(products)
+
+
